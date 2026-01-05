@@ -1,0 +1,10 @@
+{
+	"id": "kanban-tasks",
+	"name": "Kanban Tasks",
+	"version": "1.0.0",
+	"minAppVersion": "1.0.0",
+	"description": "Quick task creation for Kanban boards with hotkeys",
+	"author": "Slavyanchik",
+	"authorUrl": "https://github.com/Slavyanchik",
+	"isDesktopOnly": false
+}

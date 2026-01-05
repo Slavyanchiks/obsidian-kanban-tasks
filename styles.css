@@ -1,0 +1,102 @@
+/* Kanban Tasks Plugin Styles */
+
+.kanban-tasks-modal {
+	min-width: 500px;
+}
+
+.kanban-tasks-modal .modal-title {
+	font-size: 1.5em;
+	font-weight: bold;
+	margin-bottom: 1em;
+}
+
+.kanban-tasks-modal .setting-item {
+	border: none;
+	padding: 0.5em 0;
+}
+
+.kanban-tasks-modal .setting-item-name {
+	font-weight: 500;
+}
+
+.kanban-tasks-modal .required-field .setting-item-name::after {
+	content: " *";
+	color: var(--text-error);
+}
+
+.kanban-tasks-modal textarea {
+	min-height: 60px;
+	resize: vertical;
+}
+
+/* Кастомный layout для Task title */
+.kanban-tasks-modal .task-title-container {
+	margin-bottom: 1em;
+	width: 100%;
+}
+
+.kanban-tasks-modal .task-title-label {
+	font-weight: 500;
+	margin-bottom: 0.5em;
+	font-size: 0.875rem;
+}
+
+.kanban-tasks-modal .task-title-label .required-mark {
+	color: var(--text-error);
+}
+
+.kanban-tasks-modal .task-title-input {
+	width: 100%;
+	min-height: 80px;
+	padding: 0.5em;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background-color: var(--background-primary);
+	color: var(--text-normal);
+	font-family: var(--font-text);
+	font-size: var(--font-ui-medium);
+	resize: none; /* Убираем возможность масштабирования */
+	box-sizing: border-box;
+}
+
+.kanban-tasks-modal .task-title-input:focus {
+	outline: none;
+	border-color: var(--interactive-accent);
+}
+
+.kanban-tasks-modal .tag-selector {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5em;
+	margin-top: 0.5em;
+}
+
+.kanban-tasks-modal .tag-option {
+	padding: 0.3em 0.8em;
+	border-radius: 4px;
+	cursor: pointer;
+	border: 1px solid var(--background-modifier-border);
+	transition: all 0.2s;
+}
+
+.kanban-tasks-modal .tag-option:hover {
+	opacity: 0.8;
+}
+
+.kanban-tasks-modal .tag-option.selected {
+	border: 2px solid var(--interactive-accent);
+	font-weight: bold;
+}
+
+.kanban-tasks-modal .modal-button-container {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.5em;
+	margin-top: 1em;
+}
+
+.kanban-tasks-modal .validation-error {
+	color: var(--text-error);
+	font-size: 0.9em;
+	margin-top: 0.3em;
+}
