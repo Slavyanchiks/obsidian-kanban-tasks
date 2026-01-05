@@ -17,6 +17,11 @@
 
 .kanban-tasks-modal .setting-item-name {
 	font-weight: 500;
+	font-size: 0.95rem;
+}
+
+.kanban-tasks-modal .setting-item-description {
+	font-size: 0.85rem;
 }
 
 .kanban-tasks-modal .required-field .setting-item-name::after {
@@ -38,7 +43,7 @@
 .kanban-tasks-modal .task-title-label {
 	font-weight: 500;
 	margin-bottom: 0.5em;
-	font-size: 0.875rem;
+	font-size: 0.95rem;
 }
 
 .kanban-tasks-modal .task-title-label .required-mark {
@@ -96,7 +101,7 @@
 .kanban-tasks-modal .tag-group-label {
 	font-weight: 500;
 	margin-bottom: 0.5em;
-	font-size: 0.875rem;
+	font-size: 0.95rem;
 	color: var(--text-normal);
 }
 
@@ -107,11 +112,11 @@
 }
 
 .kanban-tasks-modal .tag-option-btn {
-	padding: 0.4em 1em;
-	border-radius: 4px;
+	padding: 0.3em 0.9em;
+	border-radius: 999px;
 	cursor: pointer;
 	font-weight: 500;
-	font-size: 0.875rem;
+	font-size: 0.85rem;
 	transition: all 0.2s;
 	outline: none;
 }
