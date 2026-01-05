@@ -1,22 +1,6 @@
 import { TFile } from 'obsidian';
 
 /**
- * Настройки Kanban доски, извлеченные из %% kanban:settings %%
- */
-export interface KanbanSettings {
-	dateFormat: string;
-	dateDisplayFormat: string;
-	tagColors: TagColor[];
-}
-
-/**
- * Настройки KanbanTasks, извлеченные из %% kanbantasks:settings %%
- */
-export interface KanbanTasksSettings {
-	tagGroups: TagGroup[];
-}
-
-/**
  * Группа тегов для отображения в выпадающем списке
  */
 export interface TagGroup {
@@ -34,12 +18,21 @@ export interface TagColor {
 }
 
 /**
+ * Настройки Kanban доски, извлеченные из %% kanban:settings %%
+ */
+export interface KanbanSettings {
+	dateFormat: string;
+	dateDisplayFormat: string;
+	tagColors: TagColor[];
+	tagGroups?: TagGroup[];
+}
+
+/**
  * Представление Kanban доски
  */
 export interface KanbanBoard {
 	file: TFile;
 	settings: KanbanSettings;
-	tasksSettings: KanbanTasksSettings | null;
 	lanes: string[];
 }
 

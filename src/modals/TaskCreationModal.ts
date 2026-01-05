@@ -127,15 +127,15 @@ export class TaskCreationModal extends Modal {
 	}
 
 	private createTagsSection(contentEl: HTMLElement): void {
-		// Проверяем наличие настроек kanbantasks
-		if (!this.board.tasksSettings || !this.board.tasksSettings.tagGroups.length) {
+		// Проверяем наличие настроек tag_groups
+		if (!this.board.settings.tagGroups || !this.board.settings.tagGroups.length) {
 			// Если нет настроек групп, используем старый стиль (все теги в одном месте)
 			this.createLegacyTagsSection(contentEl);
 			return;
 		}
 
-		// Создаем выпадающие списки для каждой группы тегов
-		this.board.tasksSettings.tagGroups.forEach(group => {
+		// Создаем раскрашенные селекторы для каждой группы тегов
+		this.board.settings.tagGroups.forEach(group => {
 			// Фильтруем теги группы, которые существуют в tagColors
 			const availableTags = group.keys.filter(tagKey =>
 				this.board.settings.tagColors.some(tc => tc.tagKey === tagKey)
@@ -145,29 +145,58 @@ export class TaskCreationModal extends Modal {
 				return; // Пропускаем группу если в ней нет доступных тегов
 			}
 
-			new Setting(contentEl)
-				.setName(group.name)
-				.setDesc('Select tag from this group')
-				.addDropdown((dropdown: DropdownComponent) => {
-					// Добавляем опцию "None"
-					dropdown.addOption('', '—');
+			// Создаем контейнер для кастомного селектора
+			const groupContainer = contentEl.createDiv({ cls: 'tag-group-container' });
 
-					// Добавляем теги группы
-					availableTags.forEach(tagKey => {
-						const tagColor = this.board.settings.tagColors.find(tc => tc.tagKey === tagKey);
-						if (tagColor) {
-							dropdown.addOption(tagKey, tagKey);
-						}
-					});
+			// Заголовок группы
+			groupContainer.createDiv({
+				text: group.name,
+				cls: 'tag-group-label'
+			});
 
-					dropdown.onChange(value => {
-						if (value) {
-							this.selectedTags.set(group.name, value);
-						} else {
-							this.selectedTags.delete(group.name);
-						}
-					});
+			// Контейнер для тегов
+			const tagsContainer = groupContainer.createDiv({ cls: 'tag-group-options' });
+
+			// Создаем кнопки-теги
+			availableTags.forEach(tagKey => {
+				const tagColor = this.board.settings.tagColors.find(tc => tc.tagKey === tagKey);
+				if (!tagColor) return;
+
+				const tagBtn = tagsContainer.createEl('button', {
+					text: tagKey,
+					cls: 'tag-option-btn'
 				});
+
+				// Применяем цвета
+				tagBtn.style.color = tagColor.color;
+				tagBtn.style.backgroundColor = tagColor.backgroundColor;
+				tagBtn.style.border = `2px solid ${tagColor.backgroundColor}`;
+
+				tagBtn.onclick = () => {
+					// Снимаем выделение с других тегов группы
+					tagsContainer.querySelectorAll('.tag-option-btn').forEach((btn) => {
+						const htmlBtn = btn as HTMLElement;
+						htmlBtn.removeClass('selected');
+						const tc = this.board.settings.tagColors.find(c => c.tagKey === htmlBtn.textContent);
+						if (tc) {
+							htmlBtn.style.border = `2px solid ${tc.backgroundColor}`;
+						}
+					});
+
+					// Проверяем, был ли тег уже выбран
+					const currentTag = this.selectedTags.get(group.name);
+					if (currentTag === tagKey) {
+						// Отменяем выбор
+						this.selectedTags.delete(group.name);
+						tagBtn.style.border = `2px solid ${tagColor.backgroundColor}`;
+					} else {
+						// Выбираем новый тег
+						this.selectedTags.set(group.name, tagKey);
+						tagBtn.addClass('selected');
+						tagBtn.style.border = `3px solid var(--interactive-accent)`;
+					}
+				};
+			});
 		});
 	}
 

@@ -1,4 +1,4 @@
-import { KanbanSettings, KanbanTasksSettings } from '../types';
+import { KanbanSettings } from '../types';
 
 /**
  * Парсер для извлечения настроек Kanban из комментария %% kanban:settings %%
@@ -27,40 +27,12 @@ export class SettingsParser {
 			return {
 				dateFormat: settingsJson['date-format'] || 'DD.MM.YYYY',
 				dateDisplayFormat: settingsJson['date-display-format'] || 'DD.MM.YYYY',
-				tagColors: settingsJson['tag-colors'] || []
+				tagColors: settingsJson['tag-colors'] || [],
+				tagGroups: settingsJson['tag_groups'] || undefined
 			};
 		} catch (error) {
 			console.error('Error parsing Kanban settings:', error);
 			return this.getDefaultSettings();
-		}
-	}
-
-	/**
-	 * Извлекает настройки KanbanTasks из содержимого файла
-	 * @param content Содержимое markdown файла
-	 * @returns Настройки KanbanTasks или null если не найдены
-	 */
-	parseKanbanTasksSettings(content: string): KanbanTasksSettings | null {
-		try {
-			// Ищем блок с настройками kanbantasks в комментарии
-			const settingsRegex = /%%\s*kanbantasks:settings\s*```\s*({[\s\S]*?})\s*```\s*%%/;
-			const match = content.match(settingsRegex);
-
-			if (!match || !match[1]) {
-				console.log('KanbanTasks settings block not found, using default behavior');
-				return null;
-			}
-
-			// Парсим JSON
-			const settingsJson = JSON.parse(match[1]);
-
-			// Конвертируем в наш формат
-			return {
-				tagGroups: settingsJson['tag_groups'] || []
-			};
-		} catch (error) {
-			console.error('Error parsing KanbanTasks settings:', error);
-			return null;
 		}
 	}
 

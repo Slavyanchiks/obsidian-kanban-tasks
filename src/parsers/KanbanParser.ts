@@ -45,8 +45,6 @@ export class KanbanParser {
 				return null;
 			}
 
-			const tasksSettings = this.settingsParser.parseKanbanTasksSettings(content);
-
 			const lanes = this.parseLanes(content);
 			if (lanes.length === 0) {
 				console.warn(`No lanes found in ${file.path}`);
@@ -56,7 +54,6 @@ export class KanbanParser {
 			return {
 				file,
 				settings,
-				tasksSettings,
 				lanes
 			};
 		} catch (error) {
